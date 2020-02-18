@@ -1,0 +1,8 @@
+OpenJDK 64-Bit Server VM (25.212-b04) for linux-amd64 JRE (Zulu 8.38.0.13-CA-linux64) (1.8.0_212-b04), built on Apr 12 2019 00:45:20 by "zulu_re" with gcc 4.4.7 20120313 (Red Hat 4.4.7-3)
+Memory: 4k page, physical 6014760k(245012k free), swap 2097148k(2086128k free)
+CommandLine flags: -XX:+ExplicitGCInvokesConcurrent -XX:GCLogFileSize=104857600 -XX:InitialHeapSize=1073741824 -XX:InitiatingHeapOccupancyPercent=35 -XX:+ManagementServer -XX:MaxGCPauseMillis=20 -XX:MaxHeapSize=1073741824 -XX:NumberOfGCLogFiles=10 -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseG1GC -XX:+UseGCLogFileRotation 
+Heap
+ garbage-first heap   total 1048576K, used 18432K [0x00000000c0000000, 0x00000000c0102000, 0x0000000100000000)
+  region size 1024K, 19 young (19456K), 0 survivors (0K)
+ Metaspace       used 9604K, capacity 9772K, committed 9984K, reserved 1058816K
+  class space    used 1141K, capacity 1188K, committed 1280K, reserved 1048576K

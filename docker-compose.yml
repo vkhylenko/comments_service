@@ -1,0 +1,69 @@
+version: '3.7'
+services:
+  comments_service:
+    build: .
+    image: comments_service
+    depends_on: 
+      - zookeeper
+      - kafka
+      - db
+    working_dir: /opt/app/bin
+    stdin_open: true
+    tty: true
+  
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    container_name: zookeeper_container
+    volumes: 
+      - zookeeper_data:/var/lib/zookeeper/data
+      - zookeeper_log:/var/lib/zookeeper/log
+    hostname: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+  
+  kafka:
+    image: confluentinc/cp-kafka
+    depends_on:
+      - zookeeper
+    container_name: kafka_container
+    ports:
+      - 9092:9092
+    volumes: 
+      - kafka:/var/lib/kafka/data
+    hostname: kafka
+    environment:
+      # KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # zookeeper.connect: Specifies the ZooKeeper connection string in the form hostname:port
+      # where host and port are the host and port of a ZooKeeper server.
+
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      # advertised.listeners: Listeners to publish to ZooKeeper for clients to use,
+      # if different than the listeners config property.
+
+      KAFKA_LISTENERS: PLAINTEXT://kafka:9092
+
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "create_comment:1:1,update_comment:1:1,get_amount_comm:1:1"
+      
+  
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: comments_repo
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    hostname: db
+    ports:
+      - 5432:5432
+  
+volumes: 
+  db:
+  kafka:
+  zookeeper_data:
+  zookeeper_log:
